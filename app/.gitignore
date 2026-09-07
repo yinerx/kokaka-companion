@@ -5,3 +5,4 @@ ios/
 builds/
 dist/
 node_modules/
+expo-env.d.ts
