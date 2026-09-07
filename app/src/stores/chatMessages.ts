@@ -43,7 +43,10 @@ export function applyTokenMessage(
   } else {
     const newest = messages[0]
     if (newest?.role === "agent" && !isTransientNudge(newest)) {
-      newest.content += message.delta
+      messages[0] = {
+        ...newest,
+        content: newest.content + message.delta,
+      }
     } else {
       messages.unshift({
         id: input.id(),

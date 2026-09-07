@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": ".test-dist",
-    "rootDir": "src",
+    "rootDir": "../..",
     "module": "CommonJS",
     "moduleResolution": "Node",
     "noEmit": false,
@@ -21,6 +21,8 @@
     "src/stores/chatReliability.test.ts",
     "src/stores/chatTrace.ts",
     "src/stores/chatTrace.test.ts",
+    "src/stores/chatMessages.ts",
+    "src/stores/chatMessages.test.ts",
     "src/stores/requestCache.ts",
     "src/stores/requestCache.test.ts",
     "src/utils/errors.ts",
