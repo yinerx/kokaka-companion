@@ -15,3 +15,4 @@ coverage
 !.env.production.example
 .dev.vars
 .DS_Store
+.claude/
