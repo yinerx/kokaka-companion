@@ -153,3 +153,28 @@ test("does not refresh when there is no refresh token", async () => {
     restore()
   }
 })
+
+test("surfaces a plain-text error body when the response is not JSON", async () => {
+  const restore = installFetch(async () => {
+    return new Response("Email already registered", {
+      status: 409,
+      headers: { "content-type": "text/plain" },
+    })
+  })
+
+  try {
+    const client = createHttpClient({ baseUrl: "https://example.com" })
+
+    await expect(
+      client.register({
+        email: "x@example.com",
+        password_hash: "h",
+      }),
+    ).rejects.toMatchObject({
+      status: 409,
+      message: "Email already registered",
+    })
+  } finally {
+    restore()
+  }
+})

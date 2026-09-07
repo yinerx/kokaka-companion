@@ -156,7 +156,18 @@ export function createHttpClient(options: HttpClientOptions) {
       )
     }
 
-    const data: unknown = await response.json().catch(() => ({}))
+    const rawText = await response.text().catch(() => "")
+    let data: unknown = {}
+    let parsedJson = false
+    try {
+      if (rawText) {
+        data = JSON.parse(rawText)
+        parsedJson = true
+      }
+    } catch {
+      // non-JSON body — keep data as {} and surface rawText as the message
+    }
+
     if (!response.ok) {
       const message =
         data &&
@@ -164,7 +175,9 @@ export function createHttpClient(options: HttpClientOptions) {
         "error" in data &&
         typeof data.error === "string"
           ? data.error
-          : "Request failed"
+          : parsedJson
+            ? "Request failed"
+            : rawText.trim() || "Request failed"
       const error = new ApiError(response.status, message, responseTraceId)
       if (response.status === 401 && requestOptions.auth) {
         await options.onUnauthorized?.()
