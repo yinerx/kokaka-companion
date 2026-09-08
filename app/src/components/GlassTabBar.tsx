@@ -5,16 +5,8 @@ import {
   StyleSheet,
   Text,
   View,
-  type LayoutChangeEvent,
 } from "react-native"
-import {
-  BackdropFilter,
-  Blur,
-  Canvas,
-  Fill,
-  rect,
-  rrect,
-} from "@shopify/react-native-skia"
+import { LiquidGlassView } from "@sbaiahmed1/react-native-blur"
 import { router } from "expo-router"
 import { useAppTheme } from "@/theme"
 
@@ -37,7 +29,6 @@ export function GlassTabBar({
 }) {
   const theme = useAppTheme()
   const [reduceTransparency, setReduceTransparency] = useState(false)
-  const [pillSize, setPillSize] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
     let mounted = true
@@ -54,29 +45,21 @@ export function GlassTabBar({
     }
   }, [])
 
-  const onPillLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout
-    setPillSize({ width, height })
-  }
-
-  const showGlass = !reduceTransparency && pillSize.width > 0
+  const showGlass = !reduceTransparency
 
   return (
     <View style={styles.dock}>
-      <View style={styles.pill} onLayout={onPillLayout}>
+      <View style={styles.pill}>
         {showGlass ? (
-          <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
-            <BackdropFilter
-              filter={<Blur blur={25} />}
-              clip={rrect(
-                rect(0, 0, pillSize.width, pillSize.height),
-                PILL_RADIUS,
-                PILL_RADIUS,
-              )}
-            >
-              <Fill color={theme.glassFill} />
-            </BackdropFilter>
-          </Canvas>
+          <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+            <LiquidGlassView
+              style={StyleSheet.absoluteFill}
+              isInteractive={false}
+              glassTintColor={theme.glassTint}
+              glassOpacity={theme.glassOpacity}
+              reducedTransparencyFallbackColor={theme.surface}
+            />
+          </View>
         ) : (
           <View
             style={[StyleSheet.absoluteFill, { backgroundColor: theme.surface }]}
