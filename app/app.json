@@ -8,6 +8,7 @@
     "scheme": "kokaka",
     "platforms": ["ios", "android"],
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
