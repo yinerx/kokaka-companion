@@ -1,18 +1,23 @@
 const fs = require("fs")
 const path = require("path")
-const { withDangerousMod } = require("@expo/config-plugins")
+const { withDangerousMod } = require("expo/config-plugins")
 
-const insertionMarker = "\n\n    # This is necessary for Xcode 14"
-const compatibilityBlock = `
+// The SDK 52 Podfile had a "This is necessary for Xcode 14" comment block we
+// used to anchor the insertion. SDK 54 removed that block, so we anchor on the
+// `react_native_post_install(` call instead and inject the fmt fix as the first
+// statement inside `post_install`.
+const insertionMarker = "    react_native_post_install(\n"
 
-    # fmt 11.0.2 does not compile as C++20 with Apple Clang in Xcode 26.5.
+const compatibilityBlock = `    # fmt does not compile as C++20 with Apple Clang in Xcode 26.5.
     installer.pods_project.targets.each do |target|
       next unless target.name == 'fmt'
 
       target.build_configurations.each do |build_config|
         build_config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
       end
-    end`
+    end
+
+`
 
 const withFmtXcode26Compatibility = (config) =>
   withDangerousMod(config, [

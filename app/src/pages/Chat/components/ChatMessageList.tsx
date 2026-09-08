@@ -614,9 +614,9 @@ const localStyles = StyleSheet.create({
   },
 })
 
-const webNoFocusOutline: (ViewStyle & { outlineStyle?: "none" }) | null =
+const webNoFocusOutline: ViewStyle | null =
   Platform.OS === "web"
     ? {
-        outlineStyle: "none",
+        outlineWidth: 0,
       }
     : null
