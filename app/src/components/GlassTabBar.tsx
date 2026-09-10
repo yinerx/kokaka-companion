@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "react-native"
-import { LiquidGlassView } from "@sbaiahmed1/react-native-blur"
+import { GlassEffectView } from "react-native-glass-effect-view"
 import { router } from "expo-router"
 import { useAppTheme } from "@/theme"
 
@@ -52,12 +52,10 @@ export function GlassTabBar({
       <View style={styles.pill}>
         {showGlass ? (
           <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-            <LiquidGlassView
+            <GlassEffectView
               style={StyleSheet.absoluteFill}
-              isInteractive={false}
-              glassTintColor={theme.glassTint}
-              glassOpacity={theme.glassOpacity}
-              reducedTransparencyFallbackColor={theme.surface}
+              appearance={theme.mode === "dark" ? "dark" : "light"}
+              tintColor={theme.glassTint}
             />
           </View>
         ) : (
