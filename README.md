@@ -212,6 +212,10 @@ kokaka/
 - 语音输入暂时下线：录音入口已隐藏，待后端转写（whisper）返回 502 的问题修复后再开放。
 - `crisis` 状态会附带危机干预资源（心理援助热线与紧急求助渠道），但仍不等同于专业危机干预；如需帮助请优先拨打热线或联系线下专业机构。
 
+## 参与贡献
+
+欢迎提 Issue 和 Pull Request，详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
 ## License
 
-MIT
+本项目使用 [MIT License](./LICENSE) 开源。
